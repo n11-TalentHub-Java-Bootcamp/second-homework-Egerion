@@ -7,6 +7,7 @@ import com.bahadirmemis.springboot.entity.Urun;
 import com.bahadirmemis.springboot.service.entityservice.KategoriEntityService;
 import com.bahadirmemis.springboot.service.entityservice.KullaniciEntityService;
 import com.bahadirmemis.springboot.service.entityservice.UrunEntityService;
+import com.bahadirmemis.springboot.service.entityservice.UrunYorumEntityService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -24,9 +25,10 @@ public class SpringBootTrainingApplication {
 
 		KategoriEntityService kategoriEntityService = applicationContext.getBean(KategoriEntityService.class);
 		UrunEntityService urunEntityService = applicationContext.getBean(UrunEntityService.class);
-		//kullanıcı Entity Service
 		KullaniciEntityService kullaniciEntityService = applicationContext.getBean(KullaniciEntityService.class);
+		UrunYorumEntityService urunYorumEntityService = applicationContext.getBean(UrunYorumEntityService.class);
 
+		//kullanıcı Entity Service
 		//findAllKullaniciList(kullaniciEntityService);
 
 		//List<Kullanici> kullaniciList = kullaniciEntityService.findAllByKullaniciById(1L);

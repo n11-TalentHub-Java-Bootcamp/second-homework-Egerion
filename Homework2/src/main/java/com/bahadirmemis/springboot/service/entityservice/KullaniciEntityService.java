@@ -33,7 +33,7 @@ public class KullaniciEntityService {
         return kullanici;
     }
 
-    public String deleteKullanici(@PathVariable String kullaniciAdi, String telefon){
+    public String deleteKullanici(String kullaniciAdi, String telefon){
         String result = "kullanıcı silindi";
         List<Kullanici> kullaniciList = kullaniciDao.findAllKullaniciByKullaniciAdiAndTelefon(kullaniciAdi, telefon);
         if(kullaniciList.isEmpty())
