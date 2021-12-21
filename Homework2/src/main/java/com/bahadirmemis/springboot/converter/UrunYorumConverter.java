@@ -12,7 +12,7 @@ public interface UrunYorumConverter {
 
     UrunYorumConverter INSTANCE = Mappers.getMapper(UrunYorumConverter.class);
 
-    @Mapping(source="id", target="urunYorum.id")
+    @Mapping(source="id", target="urunId")
     UrunYorum convertUrunYorumDtoToUrunYorum(UrunYorumDto urunYorumDto);
 
 }

@@ -1,16 +1,22 @@
 package com.bahadirmemis.springboot.controller;
 
+import com.bahadirmemis.springboot.converter.UrunConverter;
 import com.bahadirmemis.springboot.converter.UrunYorumConverter;
 import com.bahadirmemis.springboot.dao.UrunYorumDao;
 import com.bahadirmemis.springboot.dto.KategoriDto;
 import com.bahadirmemis.springboot.dto.UrunYorumDto;
+import com.bahadirmemis.springboot.entity.Urun;
 import com.bahadirmemis.springboot.entity.UrunYorum;
 import com.bahadirmemis.springboot.exception.UrunNotFoundException;
 import com.bahadirmemis.springboot.exception.YorumNotFoundException;
+import com.bahadirmemis.springboot.service.entityservice.UrunEntityService;
 import com.bahadirmemis.springboot.service.entityservice.UrunYorumEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,7 +24,10 @@ import java.util.List;
 public class YorumController {
 
     @Autowired
-    UrunYorumEntityService urunYorumEntityService;
+    private UrunYorumEntityService urunYorumEntityService;
+
+    @Autowired
+    private UrunEntityService urunEntityService;
 
     @GetMapping("/liste")
     public List<UrunYorum> findAll(){
@@ -50,10 +59,17 @@ public class YorumController {
 
     //3.3.Yeni bir yorum yazılabilecek bir servis yazınız.
     @PostMapping("")
-    public UrunYorumDto save(@RequestBody UrunYorumDto urunYorumDto){
+    public  ResponseEntity<Object> save(@RequestBody UrunYorumDto urunYorumDto){
 
         UrunYorum urunYorum = UrunYorumConverter.INSTANCE.convertUrunYorumDtoToUrunYorum(urunYorumDto);
-        UrunYorumEntityService.saveYorum(urunYorum);
+        urunYorum = urunYorumEntityService.saveYorum(urunYorum);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("{id}")
+                .buildAndExpand(urunYorum.getId())
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     //3.4.Yorum silebilecek bir servis yazınız.
